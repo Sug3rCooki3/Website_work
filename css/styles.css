@@ -1,0 +1,58 @@
+/* Simple, responsive skeleton styles for a biography page */
+:root{
+  --bg:#f7f7f9;
+  --card:#ffffff;
+  --accent:#0066cc;
+  --text:#222;
+}
+
+*{box-sizing:border-box}
+
+body{
+  font-family:Segoe UI, Roboto, Arial, sans-serif;
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.4;
+}
+
+.site-header{
+  background:linear-gradient(90deg, rgba(0,102,204,0.95), rgba(0,122,204,0.8));
+  color:#fff;
+  padding:1.25rem 1rem;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.site-header h1{margin:0;font-size:1.25rem}
+
+.site-header nav a{
+  color:rgba(255,255,255,0.95);
+  margin-left:0.75rem;
+  text-decoration:none;
+}
+
+.content{max-width:800px;margin:1.5rem auto;padding:0 1rem}
+
+.card{
+  background:var(--card);
+  border-radius:8px;
+  padding:1rem;
+  margin-bottom:1rem;
+  box-shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+
+.site-footer{
+  border-top:1px solid #e6e6e6;
+  padding:1rem;
+  text-align:center;
+  background:transparent;
+}
+
+a{color:var(--accent)}
+
+@media(min-width:700px){
+  .site-header h1{font-size:1.5rem}
+  .content{margin-top:2.5rem}
+}
