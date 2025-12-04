@@ -1,58 +1,782 @@
-/* Simple, responsive skeleton styles for a biography page */
-:root{
-  --bg:#f7f7f9;
-  --card:#ffffff;
-  --accent:#0066cc;
-  --text:#222;
+/* ==========================================================================
+   SWISS PUNK / NEW WAVE DESIGN SYSTEM
+   Caregiver Archetype: Nurturing, Protective, Compassionate
+   Typography: Inter (Swiss-style) used rebelliously
+   Grid: Challenged but present | Angles: 15°, 30°, 45°
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CSS CUSTOM PROPERTIES (Design Tokens)
+   Caregiver palette: Warm, nurturing colors with high-contrast punk accents
+   -------------------------------------------------------------------------- */
+:root {
+  /* Base colors - Monochrome foundation (Swiss Punk core) */
+  --color-black: #0a0a0a;
+  --color-white: #fafafa;
+  --color-gray-dark: #1a1a1a;
+  --color-gray-mid: #3d3d3d;
+  --color-gray-light: #e8e8e8;
+
+  /* Caregiver Accent - Nurturing warm tones + fluorescent punk accent */
+  --color-primary: #ff3366;        /* Fluorescent pink - care, compassion */
+  --color-secondary: #00d4aa;      /* Teal - healing, growth */
+  --color-accent: #ffcc00;         /* Yellow - warmth, optimism */
+  
+  /* Functional colors */
+  --color-bg: var(--color-white);
+  --color-text: var(--color-black);
+  --color-text-muted: var(--color-gray-mid);
+
+  /* Typography scale - Extreme contrast (Swiss Punk) */
+  --font-primary: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-size-tiny: 0.65rem;
+  --font-size-small: 0.8rem;
+  --font-size-base: 1rem;
+  --font-size-large: 1.5rem;
+  --font-size-xl: 2.5rem;
+  --font-size-xxl: 4rem;
+  --font-size-giant: 8rem;
+
+  /* Font weights - Mixed dynamically */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+
+  /* Letter spacing - Extreme tracking */
+  --tracking-tight: -0.05em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.15em;
+  --tracking-ultra-wide: 0.3em;
+
+  /* Swiss Punk angles (consistent system) */
+  --angle-subtle: -3deg;
+  --angle-15: -15deg;
+  --angle-30: -30deg;
+  --angle-45: -45deg;
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 6rem;
+
+  /* Z-index layers (depth) */
+  --z-bg: -1;
+  --z-base: 1;
+  --z-mid: 10;
+  --z-top: 100;
 }
 
-*{box-sizing:border-box}
-
-body{
-  font-family:Segoe UI, Roboto, Arial, sans-serif;
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.4;
+/* --------------------------------------------------------------------------
+   RESET & BASE STYLES
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-.site-header{
-  background:linear-gradient(90deg, rgba(0,102,204,0.95), rgba(0,122,204,0.8));
-  color:#fff;
-  padding:1.25rem 1rem;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
 }
 
-.site-header h1{margin:0;font-size:1.25rem}
-
-.site-header nav a{
-  color:rgba(255,255,255,0.95);
-  margin-left:0.75rem;
-  text-decoration:none;
+body {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-bg);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  position: relative;
 }
 
-.content{max-width:800px;margin:1.5rem auto;padding:0 1rem}
-
-.card{
-  background:var(--card);
-  border-radius:8px;
-  padding:1rem;
-  margin-bottom:1rem;
-  box-shadow:0 1px 3px rgba(0,0,0,0.06);
+/* --------------------------------------------------------------------------
+   SWISS PUNK BACKGROUND GRID (challenged structure)
+   -------------------------------------------------------------------------- */
+.punk-grid-bg {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-bg);
+  pointer-events: none;
+  overflow: hidden;
 }
 
-.site-footer{
-  border-top:1px solid #e6e6e6;
-  padding:1rem;
-  text-align:center;
-  background:transparent;
+.grid-line {
+  position: absolute;
+  background: var(--color-gray-light);
+  opacity: 0.4;
 }
 
-a{color:var(--accent)}
+.line-1 {
+  width: 2px;
+  height: 200%;
+  left: 20%;
+  top: -50%;
+  transform: rotate(var(--angle-15));
+}
 
-@media(min-width:700px){
-  .site-header h1{font-size:1.5rem}
-  .content{margin-top:2.5rem}
+.line-2 {
+  width: 2px;
+  height: 200%;
+  left: 60%;
+  top: -50%;
+  transform: rotate(var(--angle-30));
+}
+
+.line-3 {
+  width: 200%;
+  height: 1px;
+  left: -50%;
+  top: 70%;
+  transform: rotate(var(--angle-subtle));
+}
+
+/* Halftone overlay - analog-inspired texture */
+.halftone-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--color-gray-light) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.15;
+}
+
+/* --------------------------------------------------------------------------
+   HEADER - Swiss Punk with Caregiver warmth
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: relative;
+  background: var(--color-black);
+  color: var(--color-white);
+  padding: var(--space-md) var(--space-sm);
+  overflow: hidden;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: var(--z-base);
+}
+
+@media (min-width: 768px) {
+  .header-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+/* Logo - Layered text treatment */
+.logo-container {
+  position: relative;
+}
+
+.logo-bg {
+  position: absolute;
+  font-size: var(--font-size-giant);
+  font-weight: var(--font-weight-black);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-primary);
+  opacity: 0.15;
+  transform: rotate(var(--angle-subtle)) translateX(-10%);
+  white-space: nowrap;
+  pointer-events: none;
+  top: -40%;
+  left: -5%;
+}
+
+.logo-main {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 0.9;
+}
+
+.logo-small {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--tracking-ultra-wide);
+  text-transform: uppercase;
+  color: var(--color-secondary);
+}
+
+.logo-large {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-black);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .logo-large {
+    font-size: var(--font-size-xxl);
+  }
+  .logo-bg {
+    font-size: 10rem;
+  }
+}
+
+/* Navigation - Asymmetric energy */
+.main-nav {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+  color: var(--color-white);
+  padding: var(--space-xs);
+  transition: transform 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  transform: rotate(var(--angle-subtle)) scale(1.05);
+  outline: none;
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.nav-text {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.nav-accent {
+  font-size: var(--font-size-tiny);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--tracking-ultra-wide);
+  color: var(--color-primary);
+  transform: translateX(50%);
+}
+
+.nav-link.active .nav-text {
+  color: var(--color-accent);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--color-primary);
+  transform: rotate(var(--angle-subtle));
+}
+
+/* Header diagonal accent (edge tension) */
+.header-diagonal {
+  position: absolute;
+  bottom: -30px;
+  right: -50px;
+  width: 300px;
+  height: 60px;
+  background: var(--color-primary);
+  transform: rotate(var(--angle-15));
+  opacity: 0.8;
+}
+
+/* --------------------------------------------------------------------------
+   MAIN CONTENT
+   -------------------------------------------------------------------------- */
+.content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-sm);
+  position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   HERO SECTION - Kinetic Typography
+   -------------------------------------------------------------------------- */
+.hero-section {
+  position: relative;
+  margin-bottom: var(--space-xl);
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+}
+
+.hero-text-stack {
+  position: relative;
+  z-index: var(--z-base);
+}
+
+.hero-bg-text {
+  position: absolute;
+  font-size: var(--font-size-giant);
+  font-weight: var(--font-weight-black);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-secondary);
+  opacity: 0.1;
+  transform: rotate(var(--angle-15)) translateY(-20%);
+  white-space: nowrap;
+  top: 0;
+  left: -10%;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .hero-bg-text {
+    font-size: 12rem;
+  }
+}
+
+.hero-title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.title-line {
+  display: block;
+}
+
+.title-line-1 {
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.title-line-2 {
+  font-size: var(--font-size-xxl);
+  font-weight: var(--font-weight-black);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  line-height: 0.85;
+  transform: translateX(-5px);
+}
+
+.title-line-3 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-normal);
+  color: var(--color-primary);
+  transform: rotate(var(--angle-subtle));
+}
+
+@media (min-width: 768px) {
+  .title-line-2 {
+    font-size: 5rem;
+  }
+  .title-line-3 {
+    font-size: var(--font-size-xxl);
+  }
+}
+
+/* Hero accent block (intentional collision) */
+.hero-accent-block {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) rotate(var(--angle-30));
+  background: var(--color-accent);
+  padding: var(--space-xs) var(--space-md);
+  z-index: var(--z-mid);
+}
+
+.accent-text {
+  font-size: var(--font-size-tiny);
+  font-weight: var(--font-weight-black);
+  letter-spacing: var(--tracking-ultra-wide);
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+/* --------------------------------------------------------------------------
+   CARDS - Grid challenged but present
+   -------------------------------------------------------------------------- */
+.card {
+  position: relative;
+  background: var(--color-white);
+  margin-bottom: var(--space-lg);
+  border: 2px solid var(--color-black);
+  overflow: visible;
+}
+
+/* Offset cards create asymmetric energy */
+.card-offset {
+  transform: translateX(10px);
+}
+
+.card-offset-alt {
+  transform: translateX(-10px);
+}
+
+@media (min-width: 768px) {
+  .card-offset {
+    transform: translateX(30px);
+  }
+  .card-offset-alt {
+    transform: translateX(-30px);
+  }
+}
+
+/* Card background layer (z-depth) */
+.card-layer-bg {
+  position: absolute;
+  inset: 8px -8px -8px 8px;
+  background: var(--color-primary);
+  opacity: 0.2;
+  z-index: var(--z-bg);
+}
+
+.card-layer-bg.alt {
+  background: var(--color-secondary);
+  inset: 8px 8px -8px -8px;
+}
+
+.card-content {
+  position: relative;
+  padding: var(--space-md);
+  z-index: var(--z-base);
+}
+
+/* Card diagonal accent (edge tension) */
+.card-diagonal-accent {
+  position: absolute;
+  top: -15px;
+  right: 20px;
+  width: 80px;
+  height: 30px;
+  background: var(--color-accent);
+  transform: rotate(var(--angle-15));
+}
+
+.card-diagonal-accent.alt {
+  left: 20px;
+  right: auto;
+  background: var(--color-primary);
+  transform: rotate(calc(var(--angle-15) * -1));
+}
+
+/* Section header - Mixed weights */
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.section-number {
+  font-size: var(--font-size-tiny);
+  font-weight: var(--font-weight-black);
+  letter-spacing: var(--tracking-ultra-wide);
+  color: var(--color-primary);
+  transform: rotate(var(--angle-subtle));
+}
+
+.section-title {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+  font-size: var(--font-size-large);
+  line-height: 1.1;
+}
+
+.title-thin {
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--tracking-wide);
+}
+
+.title-bold {
+  font-weight: var(--font-weight-black);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+}
+
+/* Section body */
+.section-body {
+  font-size: var(--font-size-base);
+  line-height: 1.7;
+}
+
+.lead-text {
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-light);
+  line-height: 1.4;
+  margin-bottom: var(--space-sm);
+}
+
+.lead-text em {
+  font-style: normal;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+}
+
+/* --------------------------------------------------------------------------
+   LINKS - Swiss Punk style
+   -------------------------------------------------------------------------- */
+a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-secondary);
+  text-decoration-color: var(--color-secondary);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+/* Punk link style */
+.punk-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  position: relative;
+  text-decoration: none;
+  padding: var(--space-xs) var(--space-sm);
+  background: var(--color-black);
+  color: var(--color-white);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  font-size: var(--font-size-small);
+  transform: rotate(var(--angle-subtle));
+  transition: all 0.2s ease;
+}
+
+.punk-link:hover {
+  background: var(--color-primary);
+  color: var(--color-white);
+  transform: rotate(0deg) scale(1.02);
+}
+
+.punk-link .link-bg {
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-black);
+  color: var(--color-primary);
+  transition: transform 0.2s ease;
+}
+
+.punk-link:hover .link-bg {
+  transform: translateX(5px);
+  color: var(--color-white);
+}
+
+.punk-link .link-text {
+  text-transform: lowercase;
+}
+
+/* --------------------------------------------------------------------------
+   STATEMENT BLOCK - Swiss Punk typography showcase
+   -------------------------------------------------------------------------- */
+.statement-block {
+  position: relative;
+  margin: var(--space-xl) 0;
+  padding: var(--space-lg) var(--space-md);
+  background: var(--color-black);
+  color: var(--color-white);
+  overflow: hidden;
+  transform: rotate(var(--angle-subtle));
+}
+
+.statement-layers {
+  position: relative;
+}
+
+.statement-bg {
+  position: absolute;
+  font-size: var(--font-size-giant);
+  font-weight: var(--font-weight-black);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-primary);
+  opacity: 0.15;
+  transform: rotate(var(--angle-15));
+  top: -30%;
+  right: -10%;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .statement-bg {
+    font-size: 10rem;
+  }
+}
+
+.statement-main {
+  margin: 0;
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-light);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-wide);
+  text-align: center;
+  position: relative;
+  z-index: var(--z-base);
+}
+
+.statement-main strong {
+  display: block;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-black);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-top: var(--space-xs);
+}
+
+@media (min-width: 768px) {
+  .statement-main {
+    font-size: var(--font-size-xl);
+  }
+  .statement-main strong {
+    font-size: var(--font-size-xxl);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   FOOTER - Edge tension and diagonal composition
+   -------------------------------------------------------------------------- */
+.site-footer {
+  position: relative;
+  background: var(--color-gray-dark);
+  color: var(--color-white);
+  padding: var(--space-lg) var(--space-sm);
+  margin-top: var(--space-xl);
+  overflow: hidden;
+}
+
+.footer-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  position: relative;
+  z-index: var(--z-base);
+}
+
+@media (min-width: 768px) {
+  .footer-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.footer-header {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+}
+
+.footer-label {
+  font-size: var(--font-size-tiny);
+  font-weight: var(--font-weight-black);
+  letter-spacing: var(--tracking-ultra-wide);
+  color: var(--color-secondary);
+}
+
+.footer-title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 0.9;
+}
+
+.title-rotated {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--tracking-ultra-wide);
+  text-transform: uppercase;
+  transform: rotate(var(--angle-subtle));
+  color: var(--color-text-muted);
+}
+
+.title-main {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-black);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+}
+
+.footer-contact p {
+  margin: 0;
+}
+
+.email-link {
+  color: var(--color-accent);
+  font-weight: var(--font-weight-bold);
+}
+
+.email-link:hover {
+  color: var(--color-primary);
+}
+
+/* Footer diagonal (edge tension - extends beyond boundary) */
+.footer-diagonal {
+  position: absolute;
+  top: -40px;
+  left: -50px;
+  width: 400px;
+  height: 80px;
+  background: var(--color-secondary);
+  transform: rotate(var(--angle-15));
+  opacity: 0.3;
+}
+
+/* --------------------------------------------------------------------------
+   ACCESSIBILITY: Reduced Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   PRINT STYLES
+   -------------------------------------------------------------------------- */
+@media print {
+  .punk-grid-bg,
+  .header-diagonal,
+  .footer-diagonal,
+  .card-diagonal-accent,
+  .hero-accent-block {
+    display: none;
+  }
+  
+  body {
+    color: #000;
+    background: #fff;
+  }
+  
+  .site-header,
+  .site-footer {
+    background: #fff;
+    color: #000;
+    border: 1px solid #000;
+  }
 }
